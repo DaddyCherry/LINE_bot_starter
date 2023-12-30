@@ -4,7 +4,7 @@ az login
 
 # コマンドリファレンス：https://learn.microsoft.com/ja-jp/cli/azure/webapp?view=azure-cli-latest#az-webapp-up
 az webapp up --name <your-app-name> --resource-group <your-resource-group> --plan <your-service-plan> --runtime "PYTHON|3.8"
-az webapp up --name demoapp2312314 --resource-group line-bot_rg --sku F1 --runtime "PYTHON|3.8"
+az webapp up --name demoapp2312315 --resource-group line-bot_rg --sku F1 --runtime "PYTHON|3.8"
 
 # プログラム更新後にアップデートする際のコマンド（デプロイ時と同じ）
 az webapp up --name demoapp2312315 --resource-group line-bot_rg --sku F1 --runtime "PYTHON|3.8"
