@@ -1,0 +1,32 @@
+
+
+
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer xxxxxxxxxxxxxxxxxx' \
+-d '{
+  "to": "U8781a4bc2a4a5xxxxxx",
+  "messages": [
+    {
+      "type": "flex",
+      "altText": "This is a Flex Message",
+      "contents": {
+        "type": "bubble",
+        "body": {
+          "type": "box",
+          "layout": "horizontal",
+          "contents": [
+            {
+              "type": "text",
+              "text": "Hello,"
+            },
+            {
+              "type": "text",
+              "text": "World!"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}'
