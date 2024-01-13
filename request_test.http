@@ -11,29 +11,38 @@ curl -v -X GET https://api.line.me/v2/bot/message/quota/consumption \
 curl -v -X POST https://api.line.me/v2/bot/message/push \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Bearer {{$dotenv %CHANNEL_ACCESS_TOKEN}}' \
+# -H 'X-Line-Retry-Key: 123e4567-e89b-12d3-a456-426614174003' \
 -d '{
-  "to": "U8781a4bc2a4a5xxxxxx",
-  "messages": [
-    {
-      "type": "flex",
-      "altText": "This is a Flex Message",
-      "contents": {
-        "type": "bubble",
-        "body": {
-          "type": "box",
-          "layout": "horizontal",
-          "contents": [
-            {
-              "type": "text",
-              "text": "Hello,"
-            },
-            {
-              "type": "text",
-              "text": "World!"
-            }
-          ]1
-        }
-      }
-    }
-  ]
+    "to": "{{$dotenv %DEMO_USER_ID}}",
+    "messages":[
+
+{
+    "type":"text",
+    "text":"Hello, world1"
+},
+{
+    "type":"text",
+    "text":"Hello, world2"
+}
+
+    ]
 }'
+
+
+###
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {{$dotenv %CHANNEL_ACCESS_TOKEN}}' \
+# -H 'X-Line-Retry-Key: 123e4567-e89b-12d3-a456-426614174003' \
+-d '{
+    "to": "{{$dotenv %DEMO_USER_ID}}",
+    "messages":[
+
+{
+  "type": "image",
+  "originalContentUrl": "https://demostr231222.blob.core.windows.net/democon/a.jpg",
+  "previewImageUrl": "https://demostr231222.blob.core.windows.net/democon/a.jpg"
+}
+    ]
+}'
+
