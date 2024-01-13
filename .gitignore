@@ -1,2 +1,4 @@
 .azure
 .DS_Store
+
+.env

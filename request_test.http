@@ -1,5 +1,11 @@
 
+###
+curl -v -X GET https://api.line.me/v2/bot/message/quota/consumption \
+-H 'Authorization: Bearer {{$dotenv %token}}'
 
+
+
+###
 
 curl -v -X POST https://api.line.me/v2/bot/message/push \
 -H 'Content-Type: application/json' \
