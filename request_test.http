@@ -1,4 +1,6 @@
 
+
+
 ###
 curl -v -X GET https://api.line.me/v2/bot/message/quota/consumption \
 -H 'Authorization: Bearer {{$dotenv %CHANNEL_ACCESS_TOKEN}}'
@@ -6,10 +8,9 @@ curl -v -X GET https://api.line.me/v2/bot/message/quota/consumption \
 
 
 ###
-
 curl -v -X POST https://api.line.me/v2/bot/message/push \
 -H 'Content-Type: application/json' \
--H 'Authorization: Bearer xxxxxxxxxxxxxxxxxx' \
+-H 'Authorization: Bearer {{$dotenv %CHANNEL_ACCESS_TOKEN}}' \
 -d '{
   "to": "U8781a4bc2a4a5xxxxxx",
   "messages": [
@@ -30,7 +31,7 @@ curl -v -X POST https://api.line.me/v2/bot/message/push \
               "type": "text",
               "text": "World!"
             }
-          ]
+          ]1
         }
       }
     }

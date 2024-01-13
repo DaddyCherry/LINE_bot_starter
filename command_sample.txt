@@ -1,3 +1,8 @@
+
+# Python仮想環境構築
+python3.8 -m venv venv
+
+
 # Azure CLIのインストール
 
 az login
