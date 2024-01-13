@@ -1,4 +1,4 @@
 .azure
 .DS_Store
-
+/venv
 .env
