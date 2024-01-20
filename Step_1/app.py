@@ -9,9 +9,9 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 app = Flask(__name__)
 
 
-# @app.route('/')
-# def hello_world():
-#     return 'Hello, World!!'
+@app.route('/')
+def hello_world():
+    return 'Hello, World!!'
 
 # if __name__ == '__main__':
 #     app.run()
@@ -44,6 +44,7 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text)
+    )
 
 
 if __name__ == "__main__":
