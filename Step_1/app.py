@@ -43,7 +43,7 @@ def handle_message(event):
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text+line_bot_api.get_profile(event.source.user_id).user_id))
+        TextSendMessage(text=event.message.text)
 
 
 if __name__ == "__main__":
