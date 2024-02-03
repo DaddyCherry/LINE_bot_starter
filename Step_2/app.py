@@ -1,4 +1,5 @@
 import os
+import azure_blob_handler as abh
 
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -41,10 +42,28 @@ def callback():
 def handle_message(event):
     print(event.reply_token)
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text)
-    )
+    if event.message.text == '出勤':
+        abh.write_entity_to_shift_table(event.source.user_id, 'IN')
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='出勤記録しました。今日も一日頑張りましょう！')
+        )
+    
+    elif event.message.text == '退勤':
+        abh.write_entity_to_shift_table(event.source.user_id, 'OUT')
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='退勤記録しました。お疲れ様でした！')
+        )
+    
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=event.message.text)
+        )
+    
 
 
 if __name__ == "__main__":
