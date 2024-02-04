@@ -42,28 +42,22 @@ def callback():
 def handle_message(event):
     print(event.reply_token)
 
-    if event.message.text == '出勤':
-        abh.write_entity_to_shift_table(event.source.user_id, 'IN')
+    if event.message.text == '新規登録':
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='新規登録します。\n名前（カタカナ）を入力してください。\n\n例:ヤマダタロウです')
+        )
+    
+    elif 'です' in event.message.text:
+        msg = event.message.text
+        abh.write_entity_to_patient_table(event.source.user_id, msg.replace('です', '').replace('。', ''))
+        pat_name = abh.get_name_from_patient_table(event.source.user_id)
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='出勤記録しました。今日も一日頑張りましょう！')
+            TextSendMessage(text=pat_name+'さんですね。\n新規登録が完了しました。')
         )
-    
-    elif event.message.text == '退勤':
-        abh.write_entity_to_shift_table(event.source.user_id, 'OUT')
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text='退勤記録しました。お疲れ様でした！')
-        )
-    
-    else:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=event.message.text)
-        )
-    
 
 
 if __name__ == "__main__":

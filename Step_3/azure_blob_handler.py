@@ -1,5 +1,5 @@
 import os
-import datetime
+import json
 
 from azure.data.tables import TableServiceClient
 from azure.data.tables import TableEntity
@@ -14,33 +14,45 @@ connect_str = os.getenv("AZURE_STORAGE_CONNECT_STR")
 table_service = TableServiceClient.from_connection_string(conn_str=connect_str)
 
 
-def write_entity_to_shift_table(emp_id, rec_type):
+def write_entity_to_patient_table(pat_id, name):
 
     # 使用するテーブル名
-    table_name = "ShiftRecords"
+    table_name = "Patient"
 
     # テーブルが存在しない場合は作成
     table_client = table_service.create_table_if_not_exists(table_name=table_name)
 
     # 書き込むエンティティの作成
     entity = TableEntity()
-    entity['PartitionKey'] = emp_id
-    entity['RowKey'] = emp_id + '_' + rec_type
-    entity['Date'] = datetime.datetime.now().strftime('%Y-%m-%d')
-    entity['Time'] = datetime.datetime.now().strftime('%H:%M:%S')
-    entity['RecType'] = rec_type
+    entity['PartitionKey'] = pat_id
+    entity['RowKey'] = pat_id
+    entity['Name'] = name
 
     # エンティティをテーブルに書き込む
     table_client.upsert_entity(entity=entity)
     print("Entity successfully written to the table.")
 
 
+def get_name_from_patient_table(pat_id):
+
+    # 使用するテーブル名
+    table_name = "Patient"
+
+    # テーブルが存在しない場合は作成
+    table_client = table_service.create_table_if_not_exists(table_name=table_name)
+
+    filter_query = "PartitionKey eq '"+pat_id+"'"
+    entities = table_client.query_entities(query_filter=filter_query)
+    
+    for entity in entities:
+        return json.loads(str(entity).replace("'", '"'))['Name']
+        # return str(entity).Name
+        # return json.loads(str(entity))['Name']
+
 
 def main():
-    write_entity_to_shift_table('emp_0001', 'IN')
-    write_entity_to_shift_table('emp_0001', 'OUT')
-    write_entity_to_shift_table('emp_0002', 'IN')
-    write_entity_to_shift_table('emp_0002', 'OUT')
+    write_entity_to_patient_table('pat_0001', 'ヤマダタロウ')
+    print(get_name_from_patient_table('pat_0001'))
     pass
 
 
