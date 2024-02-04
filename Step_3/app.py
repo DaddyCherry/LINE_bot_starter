@@ -68,6 +68,17 @@ def handle_message(event):
         )
 
     elif event.message.text == '予約':
+        if abh.is_exists_reservation(event.source.user_id):
+            pat_name = abh.get_patient_name(event.source.user_id)
+            reserve_datetime = abh.get_reservation(event.source.user_id)
+
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=pat_name+'さんの次回のご予約は次のとおりです。\n\n'+reserve_datetime)
+            )
+            
+            return
+
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text='新規予約します。\n日時を入力してください。\n\n例:2024/2/5 12:25')
@@ -91,6 +102,17 @@ def handle_message(event):
             )
 
     elif event.message.text == '予約確認':
+        if abh.is_exists_reservation(event.source.user_id) == False:
+            pat_name = abh.get_patient_name(event.source.user_id)
+
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=pat_name+'さんのご予約は、まだありません。')
+            )
+            
+            return
+
+
         pat_name = abh.get_patient_name(event.source.user_id)
         reserve_datetime = abh.get_reservation(event.source.user_id)
 
@@ -100,6 +122,16 @@ def handle_message(event):
         )
 
     elif event.message.text == '予約削除':
+        if abh.is_exists_reservation(event.source.user_id) == False:
+            pat_name = abh.get_patient_name(event.source.user_id)
+
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=pat_name+'さんのご予約は、まだありません。')
+            )
+            
+            return
+
         pat_name = abh.get_patient_name(event.source.user_id)
         reserve_datetime = abh.get_reservation(event.source.user_id)
         abh.delete_reservation(event.source.user_id)

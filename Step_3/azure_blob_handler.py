@@ -83,6 +83,23 @@ def get_reservation(pat_id):
         return json.loads(str(entity).replace("'", '"'))['DateTime']
 
 
+def is_exists_reservation(pat_id):
+
+    # 使用するテーブル名
+    table_name = "Reservation"
+
+    # テーブルが存在しない場合は作成
+    table_client = table_service.create_table_if_not_exists(table_name=table_name)
+
+    filter_query = "PartitionKey eq '"+pat_id+"'"
+    entities = table_client.query_entities(query_filter=filter_query)
+
+    if len(list(entities)) == 0:
+        return False
+    
+    return True
+
+
 def delete_reservation(pat_id):
 
     # 使用するテーブル名
@@ -103,7 +120,9 @@ def main():
     register_reservation('pat_0001', datetime(2024, 2, 5, 15, 35).strftime("%Y/%m/%d %H:%M"))
     print(get_reservation('pat_0001'))
 
+    print(is_exists_reservation('pat_0001'))
     delete_reservation('pat_0001')
+    print(is_exists_reservation('pat_0001'))
 
     pass
 
