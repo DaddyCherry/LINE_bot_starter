@@ -1,5 +1,5 @@
 import os
-import azure_blob_handler as abh
+import azure_table_handler as abh
 
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
